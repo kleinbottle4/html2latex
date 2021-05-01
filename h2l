@@ -1,0 +1,68 @@
+#!/bin/sed -f
+
+/<tex>/b tex
+/<pre>/b pre
+
+: main
+
+# characters
+s/&gt./>/g
+s/&lt./</g
+s/\\/\\backslash /g
+s/{/\\{/g
+s/}/\\}/g
+s/%/\\%/g
+s/\$/\\$/g
+s/&/\\&/g
+s/#/\\#/g
+s/_/\\_/g
+s/~/\\~/g
+s/\^/\\^/g
+
+# titles
+s#<title>#\\title{#g
+s#</title>#}#g
+s#<hn>#\\part{#g
+s#</hn>#}#g
+s#<h1>#\\section{#g
+s#</h[0-9]>#}#g
+s#<h2>#\\subsection{#g
+s#<h3>#\\subsubsection{#g
+s#<h4>#\\subsubsection{#g
+s#<h5>#\\paragraph{#g
+s#<h6>#\\subparagraph{#g
+
+# lists
+s#<ul>#\\begin{itemize}#g
+s#</ul>#\\end{itemize}#g
+s#<li>#\\item{#g
+s#</li>#}#g
+
+# emphasis
+s#<it>#\\textit{#g
+s#</it>#}#g
+s#<em>#\\textit{#g
+s#</em>#}#g
+s#<strong>#\\textbf{#g
+s#</strong>#}#g
+
+# misc
+s#<dl>#\\begin{description}#g
+s#</dl>#\\end{description}#g
+
+# equations
+s/^\$\$/\\begin{align}\n/g
+s/\$\$$/\n\\end{align}/g
+
+:tex
+s#<tex>##g
+s#</tex>##g
+
+s#<p>#\n#g
+s#</p>##g
+
+:pre
+s#<pre>##g
+s#<code>#\\begin{verbatim}\n#g
+s#</code>#\\end{verbatim}#
+s#</pre>##g
