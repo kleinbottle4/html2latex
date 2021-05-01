@@ -3,8 +3,6 @@
 /<tex>/b tex
 /<pre>/b pre
 
-: main
-
 # characters
 s/&gt./>/g
 s/&lt./</g
