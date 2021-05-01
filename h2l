@@ -1,6 +1,7 @@
 #!/bin/sed -f
 
 /<tex>/b tex
+/\$\$/b eqn
 /<pre>/b pre
 
 # characters
@@ -10,7 +11,6 @@ s/\\/\\backslash /g
 s/{/\\{/g
 s/}/\\}/g
 s/%/\\%/g
-s/\$/\\$/g
 s/&/\\&/g
 s/#/\\#/g
 s/_/\\_/g
@@ -48,9 +48,9 @@ s#</strong>#}#g
 s#<dl>#\\begin{description}#g
 s#</dl>#\\end{description}#g
 
-# equations
-s/^\$\$/\\begin{align}\n/g
-s/\$\$$/\n\\end{align}/g
+:eqn
+s#\(<p>\|^\)\$\$#\\begin{align}\n#g
+s#\$\$\(</p>\|$\)#\n\\end{align}#g
 
 :tex
 s#<tex>##g
